@@ -49,9 +49,14 @@ public class SecurityConfig {
         
         // Use origins from application.properties / Env Var
         if (allowedOrigins != null && !allowedOrigins.isEmpty()) {
-            configuration.setAllowedOrigins(java.util.Arrays.asList(allowedOrigins.split(",")));
+            java.util.List<String> origins = java.util.Arrays.stream(allowedOrigins.split(","))
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .collect(java.util.stream.Collectors.toList());
+            configuration.setAllowedOrigins(origins);
         } else {
-            configuration.setAllowedOrigins(java.util.Collections.singletonList("*"));
+            // Use patterns for wildcard with allowCredentials(true)
+            configuration.setAllowedOriginPatterns(java.util.Collections.singletonList("*"));
         }
         
         configuration.setAllowedMethods(java.util.Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
