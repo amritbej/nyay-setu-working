@@ -60,10 +60,7 @@ services:
       - GOOGLE_GEMINI_API_KEY=${GOOGLE_GEMINI_API_KEY}
       # Keep this aligned with FRONTEND_URL; set both explicitly in .env when needed.
       - FRONTEND_ORIGIN=${FRONTEND_ORIGIN:-http://localhost}
-    deploy:
-      resources:
-        limits:
-          memory: 256M
+    mem_limit: 256M
     restart: always
 
   # 4. Frontend (React + Nginx)
