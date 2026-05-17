@@ -1,5 +1,6 @@
 import SkeletonCard from '../../components/common/SkeletonCard';
 import CaseCard from '../../components/dashboard/CaseCard';
+import CaseStepper from '../../components/common/CaseStepper';
 import { useState, useEffect } from 'react';
 import { FolderOpen, Video, FileText, TrendingUp, Clock, Bot, MessageCircle, MessageSquare, Loader2, Scale, AlertCircle, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -392,7 +393,9 @@ export default function LitigantDashboard() {
                                     date={caseItem.date}
                                     filedLabel={t('litigant.filed')}
                                     onClick={() => navigate(`/litigant/case-diary/${caseItem.fullId}`)}
-                                />
+                                >
+                                    <CaseStepper currentStatus={caseItem.status} judicialStage={caseItem.currentJudicialStage} compact={true} />
+                                </CaseCard>
                             ))
                         )}
                     </div>

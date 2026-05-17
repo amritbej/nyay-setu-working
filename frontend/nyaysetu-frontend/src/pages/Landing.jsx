@@ -1,4 +1,3 @@
-// CHANGED: Added useTheme to switch the hero image between light/dark variants
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -12,41 +11,8 @@ import AchievementsSection from '../components/landing/AchievementsSection';
 import HowItWorks from '../components/landing/HowItWorks';
 import TrustIndicators from '../components/landing/TrustIndicators';
 
-// CHANGED: Removed ISO Certified — only meaningful trust stats kept
-const TRUST_STATS = [
-    { value: '50K+', label: 'Active Users', icon: Users },
-    { value: '99%', label: 'Success Rate', icon: Star },
-    { value: '24/7', label: 'Availability', icon: CheckCircle },
-];
-
-// CHANGED: Three glassmorphic quick-action cards below the hero replace the old stats strip
-const QUICK_CARDS = [
-    {
-        icon: UserPlus,
-        title: 'Create Account',
-        desc: 'Create your account and activate your access in seconds — no paperwork required.',
-        color: '#7C5CFF',
-        bg: 'rgba(124,92,255,0.08)',
-    },
-    {
-        icon: FileText,
-        title: 'Submit Your Case',
-        desc: 'Submit your cases from anywhere with secure document management.',
-        color: '#3F5DCC',
-        bg: 'rgba(63,93,204,0.08)',
-    },
-    {
-        icon: Zap,
-        title: 'Powerful Features',
-        desc: 'Access AI-powered legal tech with real-time tracking and transparency.',
-        color: '#10B981',
-        bg: 'rgba(16,185,129,0.08)',
-    },
-];
-
 export default function Landing() {
-    const { t } = useTranslation(['landing', 'common']);
-    // CHANGED: Pull current theme to conditionally render light/dark hero image
+    const { t } = useTranslation('landing');
     const { theme } = useTheme();
     const [deferredPrompt, setDeferredPrompt] = useState(null);
 
@@ -62,6 +28,48 @@ export default function Landing() {
         if (ev) { await ev.prompt(); window.deferredPrompt = null; setDeferredPrompt(null); }
         else alert('Already installed, or use browser menu.');
     };
+
+    const TRUST_STATS = [
+        { value: '50K+', label: t('trustStats.activeUsers'), icon: Users },
+        { value: '99%',  label: t('trustStats.successRate'), icon: Star },
+        { value: '24/7', label: t('trustStats.availability'), icon: CheckCircle },
+    ];
+
+    const QUICK_CARDS = [
+        {
+            icon: UserPlus,
+            title: t('quickCards.createAccount.title'),
+            desc:  t('quickCards.createAccount.desc'),
+            cta:   t('quickCards.createAccount.cta'),
+            color: '#7C5CFF',
+            bg: 'rgba(124,92,255,0.08)',
+        },
+        {
+            icon: FileText,
+            title: t('quickCards.submitCase.title'),
+            desc:  t('quickCards.submitCase.desc'),
+            cta:   t('quickCards.submitCase.cta'),
+            color: '#3F5DCC',
+            bg: 'rgba(63,93,204,0.08)',
+        },
+        {
+            icon: Zap,
+            title: t('quickCards.powerfulFeatures.title'),
+            desc:  t('quickCards.powerfulFeatures.desc'),
+            cta:   t('quickCards.powerfulFeatures.cta'),
+            color: '#10B981',
+            bg: 'rgba(16,185,129,0.08)',
+        },
+    ];
+
+    const FEATURES = [
+        { icon: Bot,         title: t('features.aiLegalAssistant.title'),   desc: t('features.aiLegalAssistant.description'),   color: '#3F5DCC' },
+        { icon: BookOpen,    title: t('features.constitutionReader.title'),  desc: t('features.constitutionReader.description'),  color: '#7C5CFF' },
+        { icon: FileText,    title: t('features.fileCases.title'),           desc: t('features.fileCases.description'),           color: '#10B981' },
+        { icon: Video,       title: t('features.virtualHearings.title'),     desc: t('features.virtualHearings.description'),     color: '#F59E0B' },
+        { icon: ShieldCheck, title: t('features.securePrivate.title'),       desc: t('features.securePrivate.description'),       color: '#EF4444' },
+        { icon: Zap,         title: t('features.realTimeUpdates.title'),     desc: t('features.realTimeUpdates.description'),     color: '#8B5CF6' },
+    ];
 
     return (
         <div style={{ minHeight: '100vh', background: 'var(--bg-main)', position: 'relative' }}>
@@ -79,7 +87,6 @@ export default function Landing() {
                     position: 'relative',
                     overflow: 'hidden',
                 }}>
-                    {/* Geometric background pattern */}
                     <div style={{
                         position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none',
                         backgroundImage: `
@@ -88,14 +95,12 @@ export default function Landing() {
                         `,
                         backgroundSize: '60px 60px',
                     }} />
-                    {/* Top-right gradient blob */}
                     <div style={{
                         position: 'absolute', top: '-80px', right: '-80px',
                         width: '500px', height: '500px', borderRadius: '50%',
                         background: 'radial-gradient(circle, rgba(124,92,255,0.10) 0%, transparent 70%)',
                         pointerEvents: 'none',
                     }} />
-                    {/* Bottom-left blob */}
                     <div style={{
                         position: 'absolute', bottom: '0', left: '-100px',
                         width: '400px', height: '400px', borderRadius: '50%',
@@ -103,7 +108,6 @@ export default function Landing() {
                         pointerEvents: 'none',
                     }} />
 
-                    {/* Two-column layout */}
                     <div style={{
                         maxWidth: '1320px', margin: '0 auto', width: '100%',
                         display: 'grid',
@@ -127,7 +131,7 @@ export default function Landing() {
                                 fontFamily: 'var(--font-heading)',
                                 marginBottom: '0.5rem',
                             }}>
-                                AI-Powered<br />Digital Justice
+                                {t('hero.title')}
                             </h1>
                             <h1 style={{
                                 fontSize: 'clamp(2.6rem, 4.5vw, 4rem)',
@@ -141,7 +145,7 @@ export default function Landing() {
                                 WebkitTextFillColor: 'transparent',
                                 backgroundClip: 'text',
                             }}>
-                                for Every Citizen
+                                {t('hero.titleHighlight')}
                             </h1>
 
                             <p style={{
@@ -151,7 +155,7 @@ export default function Landing() {
                                 marginBottom: '2.5rem',
                                 maxWidth: '480px',
                             }}>
-                                Access justice from anywhere, anytime. File cases, track progress, attend virtual hearings, and get AI-powered legal assistance—all on a single transparent platform.
+                                {t('hero.subtitle')}
                             </p>
 
                             <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap', marginBottom: '3.5rem' }}>
@@ -170,14 +174,14 @@ export default function Landing() {
                                     onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(63,93,204,0.35)'; }}
                                     onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(63,93,204,0.25)'; }}
                                 >
-                                    Get Started Free <ArrowRight size={18} />
+                                    {t('hero.getStartedFree')} <ArrowRight size={18} />
                                 </Link>
 
                                 <motion.button
                                     whileHover={{ scale: 1.08 }}
                                     whileTap={{ scale: 0.95 }}
                                     onClick={handleInstall}
-                                    title="Install App"
+                                    title={t('hero.installApp')}
                                     style={{
                                         width: '48px', height: '48px',
                                         borderRadius: '12px',
@@ -210,14 +214,13 @@ export default function Landing() {
                             </div>
                         </motion.div>
 
-                        {/* Right — scales image blended into the page background */}
+                        {/* Right — scales image */}
                         <motion.div
                             initial={{ opacity: 0, x: 30, scale: 0.95 }}
                             animate={{ opacity: 1, x: 0, scale: 1 }}
                             transition={{ duration: 0.8, ease: 'easeOut' }}
                             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}
                         >
-                            {/* purple glow blob behind the image */}
                             <div style={{
                                 position: 'absolute',
                                 width: '420px', height: '420px', borderRadius: '50%',
@@ -304,7 +307,7 @@ export default function Landing() {
                                     onMouseEnter={e => e.currentTarget.style.gap = '0.6rem'}
                                     onMouseLeave={e => e.currentTarget.style.gap = '0.35rem'}
                                 >
-                                    Get Started <ArrowRight size={14} />
+                                    {card.cta} <ArrowRight size={14} />
                                 </Link>
                             </motion.div>
                         ))}
@@ -329,27 +332,20 @@ export default function Landing() {
                                 borderRadius: '2rem',
                             }}>
                                 <span style={{ color: 'var(--color-accent)', fontSize: '0.78rem', fontWeight: '700', letterSpacing: '0.07em', textTransform: 'uppercase' }}>
-                                    Platform Features
+                                    {t('features.badge')}
                                 </span>
                             </div>
                             <h2 style={{ fontSize: 'clamp(1.9rem,3.5vw,2.6rem)', fontWeight: '800', color: 'var(--text-main)', marginBottom: '1rem', letterSpacing: '-0.025em' }}>
-                                Powerful Features for{' '}
-                                <span style={{ color: 'var(--color-secondary)' }}>Modern Justice</span>
+                                {t('features.title')}{' '}
+                                <span style={{ color: 'var(--color-secondary)' }}>{t('features.titleHighlight')}</span>
                             </h2>
                             <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', maxWidth: '560px', margin: '0 auto' }}>
-                                Everything you need to navigate the legal system efficiently
+                                {t('features.subtitle')}
                             </p>
                         </div>
 
                         <div className="features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
-                            {[
-                                { icon: Bot, title: 'AI Legal Assistant', desc: '24/7 AI-powered chatbot for instant legal guidance', color: '#3F5DCC' },
-                                { icon: BookOpen, title: 'Constitution Reader', desc: 'Browse Indian Constitution with intelligent search and Q&A', color: '#7C5CFF' },
-                                { icon: FileText, title: 'File Cases Online', desc: 'Submit legal cases digitally with secure document management', color: '#10B981' },
-                                { icon: Video, title: 'Virtual Hearings', desc: 'Attend court proceedings remotely with video conferencing', color: '#F59E0B' },
-                                { icon: ShieldCheck, title: 'Secure & Private', desc: 'Bank-grade encryption ensures your data stays protected', color: '#EF4444' },
-                                { icon: Zap, title: 'Real-time Updates', desc: 'Get instant notifications on case progress and hearings', color: '#8B5CF6' },
-                            ].map((f, i) => {
+                            {FEATURES.map((f, i) => {
                                 const FeatureIcon = f.icon;
                                 return (
                                     <motion.div key={i}
@@ -412,21 +408,21 @@ export default function Landing() {
                                 borderRadius: '2rem',
                             }}>
                                 <span style={{ color: 'var(--color-accent)', fontSize: '0.78rem', fontWeight: '700', letterSpacing: '0.07em', textTransform: 'uppercase' }}>
-                                    Get Started Today
+                                    {t('cta.badge')}
                                 </span>
                             </div>
                             <h2 style={{ fontSize: 'clamp(1.75rem,3.5vw,2.5rem)', fontWeight: '800', color: 'var(--text-main)', marginBottom: '1rem', letterSpacing: '-0.025em' }}>
-                                Ready to Start Your Journey to Justice?
+                                {t('cta.title')}
                             </h2>
                             <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', marginBottom: '0.75rem', maxWidth: '560px', margin: '0 auto 0.75rem', lineHeight: '1.7' }}>
-                                Join thousands of citizens already using NyaySetu for their legal needs
+                                {t('cta.subtitle')}
                             </p>
                             <p style={{
                                 fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '2rem',
                                 padding: '0.4rem 0.9rem', display: 'inline-block',
                                 background: 'rgba(245,158,11,0.07)', border: '1px solid rgba(245,158,11,0.2)', borderRadius: '6px',
                             }}>
-                                AI outputs are for guidance only and do not constitute legal advice.
+                                {t('cta.disclaimer')}
                             </p>
                             <div style={{ display: 'block' }}>
                                 <Link to="/signup" style={{
@@ -441,7 +437,7 @@ export default function Landing() {
                                     onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
                                     onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
                                 >
-                                    Create Free Account <ArrowRight size={18} />
+                                    {t('cta.createAccount')} <ArrowRight size={18} />
                                 </Link>
                             </div>
                         </motion.div>
@@ -451,25 +447,14 @@ export default function Landing() {
 
             <Footer />
 
-            {/* Responsive grid + hero image blend rules */}
             <style>{`
                 .hero-img-wrap {
                     position: relative;
                     z-index: 1;
-                    -webkit-mask-image: radial-gradient(
-                        ellipse 80% 80% at 50% 50%,
-                        black 45%,
-                        transparent 100%
-                    );
-                    mask-image: radial-gradient(
-                        ellipse 80% 80% at 50% 50%,
-                        black 45%,
-                        transparent 100%
-                    );
+                    -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 45%, transparent 100%);
+                    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 45%, transparent 100%);
                 }
-                .hero-img {
-                    border-radius: 0;
-                }
+                .hero-img { border-radius: 0; }
                 @media (max-width: 900px) {
                     .hero-grid { grid-template-columns: 1fr !important; }
                     .hero-grid > div:last-child { display: none; }

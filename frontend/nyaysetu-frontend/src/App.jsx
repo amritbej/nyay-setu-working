@@ -6,6 +6,7 @@ import { LanguageProvider } from './contexts/LanguageContext.jsx';
 import { ThemeProvider } from './contexts/ThemeContext.jsx';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingSpinner from './components/LoadingSpinner';
+import ScrollToTop from './ScrollToTop';
 
 // PWA Components
 import OfflineIndicator from './components/OfflineIndicator';
@@ -18,6 +19,9 @@ const Login = lazy(() => import('./pages/Login'));
 const Signup = lazy(() => import('./pages/Signup'));
 const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 const About = lazy(() => import('./pages/About'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const Terms = lazy(() => import('./pages/Terms'));
+const Disclaimer = lazy(() => import('./pages/Disclaimer'));
 
 // Dashboard Layout
 const DashboardLayout = lazy(() => import('./layouts/DashboardLayout'));
@@ -110,6 +114,7 @@ function App({ swRegistration }) {
                             v7_relativeSplatPath: true
                         }}
                     >
+                        <ScrollToTop />
                         <Suspense fallback={<LoadingSpinner fullScreen message="Loading NyaySetu..." />}>
                             <Routes>
                                 <Route path="/" element={<Landing />} />
@@ -118,6 +123,9 @@ function App({ swRegistration }) {
                                 <Route path="/reset-password/:token" element={<ResetPassword />} />
                                 <Route path="/constitution" element={<Constitution />} />
                                 <Route path="/about" element={<About />} />
+                                <Route path="/privacy" element={<PrivacyPolicy />} />
+                                <Route path="/terms" element={<Terms />} />
+                                <Route path="/disclaimer" element={<Disclaimer />} />
 
                                 {/* Protected Dashboards */}
                                 <Route

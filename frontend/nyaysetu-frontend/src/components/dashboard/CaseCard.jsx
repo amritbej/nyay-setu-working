@@ -45,7 +45,7 @@ const DEFAULT_STATUS_STYLE = {
     border: 'rgba(100, 116, 139, 0.25)',
 };
 
-export default function CaseCard({ id, title, status, date, onClick, filedLabel = 'Filed' }) {
+export default function CaseCard({ id, title, status, date, onClick, filedLabel = 'Filed', children }) {
     const [isHovered, setIsHovered] = useState(false);
 
     const statusStyle = STATUS_STYLES[status] || DEFAULT_STATUS_STYLE;
@@ -146,6 +146,13 @@ export default function CaseCard({ id, title, status, date, onClick, filedLabel 
             >
                 {filedLabel}: {date}
             </p>
+
+            {/* Extra content (e.g. CaseStepper) */}
+            {children && (
+                <div style={{ marginTop: '0.5rem' }}>
+                    {children}
+                </div>
+            )}
         </div>
     );
 }
