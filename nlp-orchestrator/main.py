@@ -15,10 +15,9 @@ import json
 import logging
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request
 import time
 import uuid
-import os
 from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -35,8 +34,7 @@ from decomposer import decompose_query
 from router import route_questions
 from research import run_parallel_research, execute_with_fallback
 from synthesizer import synthesize_answers
-from research import run_parallel_research, stream_groq_chat
-from synthesizer import synthesize_answers, stream_synthesize_answers
+from synthesizer import stream_synthesize_answers
 from validators.citation_validator import validate_citations_from_text
 from avatar_speech import get_interim_messages, convert_to_hinglish, detect_domain
 from services.kanoon_search import build_kanoon_context
@@ -477,10 +475,9 @@ async def deep_research_pipeline(query: str, language: str):
         logger.info("[Deep Research] Stage 3: Routing...")
         
         # Compute complexity score for display
-        from router import classify_question, COMPLEX_KEYWORDS, SIMPLE_KEYWORDS
+        from router import COMPLEX_KEYWORDS
         lower_q = query.lower()
         complex_score = sum(1 for kw in COMPLEX_KEYWORDS if kw in lower_q)
-        simple_score = sum(1 for kw in SIMPLE_KEYWORDS if kw in lower_q)
         word_count = len(query.split())
         
         # Normalized complexity 0-1

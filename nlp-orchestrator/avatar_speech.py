@@ -4,7 +4,6 @@ Layer 5: Avatar Speech Layer
 2. Converts the final answer to Hinglish spoken dialogue for the 3D avatar
 """
 
-import asyncio
 import random
 from groq import AsyncGroq
 from config import GROQ_API_KEY, GROQ_MODEL_FAST

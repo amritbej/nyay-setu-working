@@ -4,7 +4,6 @@ Combines all sub-answers into one structured, clean final legal answer.
 Includes relevant IPC / BNS / MVA section references.
 """
 
-import asyncio
 from groq import AsyncGroq
 from config import GROQ_API_KEY, GROQ_MODEL_FAST
 
