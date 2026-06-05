@@ -7,6 +7,7 @@ import { ThemeProvider } from './contexts/ThemeContext.jsx';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingSpinner from './components/LoadingSpinner';
 import ScrollToTop from './ScrollToTop';
+import BackToTop from './components/BackToTop';
 
 // PWA Components
 import OfflineIndicator from './components/OfflineIndicator';
@@ -162,6 +163,7 @@ function App({ swRegistration }) {
                         <GuestWelcomeToast />
                         <GuestOnboardingHint />
                         <ScrollToTop />
+                        <BackToTop />
                         <Suspense fallback={<LoadingSpinner fullScreen message="Loading NyaySetu..." />}>
                             <Routes>
                                 <Route path="/" element={<Landing />} />
