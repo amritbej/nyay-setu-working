@@ -42,8 +42,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         String email = oauthUser.getAttribute("email");
         String name = oauthUser.getAttribute("name");
 
-        System.out.println("EMAIL: " + email);
-        System.out.println("NAME: " + name);
+
 
         String jwtToken = jwtService.generateToken(
                 new HashMap<>(),
@@ -54,7 +53,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
                 )
         );
 
-        System.out.println("JWT TOKEN: " + jwtToken);
+
 
         User dbUser = authService.findByEmail(email);
 

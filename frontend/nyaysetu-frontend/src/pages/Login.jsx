@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { useNavigate, Link,useSearchParams} from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { authAPI } from '../services/api';
 import useAuthStore from '../store/authStore';
@@ -9,8 +9,6 @@ import FaceLoginModal from '../components/auth/FaceLoginModal';
 import ForgotPasswordModal from '../components/auth/ForgotPasswordModal';
 
 export default function Login() {
-    const [searchParams] = useSearchParams();
-    const isSessionExpired = searchParams.get('reason') === 'session_expired';
     const { t } = useTranslation('auth');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -73,7 +71,7 @@ export default function Login() {
                 role: selectedRole || 'LITIGANT' // Default to LITIGANT if no role selected
             };
 
-          //  console.log('Sending login request:', loginPayload);
+            
             const response = await authAPI.login(loginPayload);
             const { token, user } = response.data;
 
@@ -232,20 +230,7 @@ export default function Login() {
                                 {t('auth:login.subtitle')}
                             </p>
                         </div>
-                        {isSessionExpired && (
-                            <div style={{
-                                backgroundColor: '#fff3cd',
-                                color: '#856404',
-                                padding: '12px 16px',
-                                borderRadius: '6px',
-                                marginBottom: '20px',
-                                border: '1px solid #ffeeba',
-                                fontSize: '14px',
-                                textAlign: 'center'
-                            }}>
-                                Your session expired for your security. Please log in again to continue.
-                            </div>
-                        )}
+
                         {error && (
                             <div style={{
                                 padding: '1rem',
@@ -515,13 +500,12 @@ export default function Login() {
                                 }} />
                             </div>
 
-                            console.log("ENV VALUE =", import.meta.env.VITE_API_BASE_URL);
-
+                            
                             {/* Google Login */}
                             <button
                                 type="button"
                                 onClick={() => {
-                                    window.location.href = `http://localhost:8080/oauth2/authorization/google`;
+                                    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/google`;
                                 }}
                                 style={{
                                     width: '100%',
