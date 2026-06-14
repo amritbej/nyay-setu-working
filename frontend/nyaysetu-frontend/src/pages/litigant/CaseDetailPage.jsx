@@ -1516,6 +1516,9 @@ function TimelineTab({ caseData }) {
     };
 
     const downloadTimelinePdf = () => {
+        const PDF_MARGIN = '32px';
+        const PDF_BODY_COLOR = '#111827';
+        const PDF_FONT_FAMILY = 'Arial, sans-serif';
         const safe = (value) => String(value || '').replace(/[&<>"']/g, (char) => ({
             '&': '&amp;',
             '<': '&lt;',
@@ -1546,7 +1549,7 @@ function TimelineTab({ caseData }) {
                 <head>
                     <title>Case Timeline - ${safe(caseData.id)}</title>
                     <style>
-                        body { font-family: Arial, sans-serif; color: #111827; margin: 32px; }
+                        body { font-family: ${PDF_FONT_FAMILY}; color: ${PDF_BODY_COLOR}; margin: ${PDF_MARGIN}; }
                         h1 { margin: 0 0 8px; font-size: 24px; }
                         p { margin: 4px 0; color: #4b5563; }
                         .meta { margin: 18px 0 24px; padding: 14px; border: 1px solid #d1d5db; border-radius: 8px; }
