@@ -22,6 +22,10 @@ import { t } from 'i18next';
 // HELPER CONSTANTS & FUNCTIONS
 // -----------------------------------------------------------------------------
 
+const PDF_MARGIN = '32px';
+const PDF_BODY_COLOR = '#111827';
+const PDF_FONT_FAMILY = 'Arial, sans-serif';
+
 const statusColors = {
     'PENDING': { bg: '#f5930020', border: '#f59e0b', text: '#f59e0b' },
     'IN_PROGRESS': { bg: 'rgba(30, 42, 68, 0.1)', border: 'var(--color-primary)', text: 'var(--color-primary)' },
@@ -1516,9 +1520,6 @@ function TimelineTab({ caseData }) {
     };
 
     const downloadTimelinePdf = () => {
-        const PDF_MARGIN = '32px';
-        const PDF_BODY_COLOR = '#111827';
-        const PDF_FONT_FAMILY = 'Arial, sans-serif';
         const safe = (value) => String(value || '').replace(/[&<>"']/g, (char) => ({
             '&': '&amp;',
             '<': '&lt;',
