@@ -7,6 +7,7 @@ import com.nyaysetu.backend.entity.User;
 import com.nyaysetu.backend.notification.service.NotificationService;
 import com.nyaysetu.backend.service.AuthService;
 import com.nyaysetu.backend.service.HearingService;
+import com.nyaysetu.backend.service.CaseAccessService;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.TestingAuthenticationToken;
@@ -25,7 +26,8 @@ class HearingControllerTest {
         HearingController controller = new HearingController(
                 hearingService,
                 new FakeNotificationService(),
-                new FakeAuthService()
+                new FakeAuthService(),
+                new CaseAccessService(null)
         );
 
         ResponseEntity<Map<String, Object>> response = controller.joinHearing(
@@ -45,7 +47,8 @@ class HearingControllerTest {
         HearingController controller = new HearingController(
                 hearingService,
                 new FakeNotificationService(),
-                new FakeAuthService()
+                new FakeAuthService(),
+                new CaseAccessService(null)
         );
 
         ResponseEntity<Void> response = controller.leaveHearing(
