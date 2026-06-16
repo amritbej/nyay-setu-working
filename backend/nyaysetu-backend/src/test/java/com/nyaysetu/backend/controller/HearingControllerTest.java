@@ -119,9 +119,10 @@ class HearingControllerTest {
         }
     }
 
+    // CaseAccessService has exactly ONE constructor arg: CaseRepository
     private static class FakeCaseAccessService extends CaseAccessService {
         FakeCaseAccessService() {
-            super(null, null);
+            super(null);
         }
     }
 }
