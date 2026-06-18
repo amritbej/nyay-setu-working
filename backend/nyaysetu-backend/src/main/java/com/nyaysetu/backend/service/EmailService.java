@@ -13,7 +13,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -34,15 +33,23 @@ public class EmailService {
     private Long tokenValidityMs;
 
     @Async
-    public void sendPasswordResetEmail(String email) throws MessagingException {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    @Transactional
+    public void sendPasswordResetEmail(String email) {
+        var userOptional = userRepository.findByEmail(email);
+
+        if (userOptional.isEmpty()) {
+            log.info("Password reset requested for non-existing email. Generic response returned.");
+            return;
+        }
+
+        User user = userOptional.get();
 
         tokenRepository.deleteByUser(user);
 
         String token = UUID.randomUUID().toString();
+        // Set token expiry
         LocalDateTime expiryDate = LocalDateTime.now()
-                .plusSeconds(tokenValidityMs / 1000);
+                .plus(Duration.ofMillis(tokenValidityMs));
 
         PasswordResetToken resetToken = PasswordResetToken.builder()
                 .token(token)
